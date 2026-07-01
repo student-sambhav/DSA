@@ -5,7 +5,7 @@ public:
         int water=0;
         while(l<=r){
             if(lmax<=rmax){
-                if(lmax<=height[l]){
+                if(height[l]>=lmax){
                     lmax=height[l];
                 }
                 else{
@@ -14,7 +14,7 @@ public:
                 l++;
             }
             else{
-                if(rmax<=height[r]){
+                if(height[r]>=rmax){
                     rmax=height[r];
                 }
                 else{
