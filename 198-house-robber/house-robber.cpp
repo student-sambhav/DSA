@@ -1,17 +1,13 @@
 class Solution {
 public:
-int dp[501];
-int solve(vector<int>& nums,int ind){
-    if(ind>=nums.size()) return 0;
-    if(dp[ind]!=-1) return dp[ind];
-    int take=nums[ind]+solve(nums,ind+2);
-    int nt=solve(nums,ind+1);
-    return dp[ind]=max(take,nt);
-}
     int rob(vector<int>& nums) {
-    int ind=0; 
-    memset(dp,-1,sizeof(dp));
-    return solve(nums,ind);
-
+    int n=nums.size();
+    vector<int>dp(n+2,0);
+    for(int i=n-1;i>=0;i--){
+        int take=nums[i]+dp[i+2];
+        int nt=dp[i+1];
+        dp[i]=max(take,nt);
+    }
+    return dp[0];
     }
 };
