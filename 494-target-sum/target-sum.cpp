@@ -1,24 +1,30 @@
 class Solution {
 public:
-int n,t,totalsum;
-int dp[1001][20001];
-int solve(vector<int>&nums,int i,int currsum){
-    if(i==n){
-        return currsum==t;
-    }
-    if(dp[i][currsum+totalsum]!=-1) return dp[i][currsum+totalsum];
-    int plus=solve(nums,i+1,currsum+nums[i]);
-    int minus=solve(nums,i+1,currsum-nums[i]);
-    return dp[i][currsum+totalsum]= plus+minus;
-}
     int findTargetSumWays(vector<int>& nums, int target) {
-        n=nums.size();
-        t=target;
-        totalsum=0;
-        memset(dp,-1,sizeof(dp));
+        int n=nums.size();
+        int totalsum=0;
         for(int x:nums){
             totalsum+=x;
         }
-        return solve(nums,0,0);
+        if(abs(target) > totalsum)
+            return 0;
+
+        if((totalsum + target) % 2 != 0)
+            return 0;
+
+        int req = (totalsum + target) / 2;
+        vector<vector<int>>dp(n+1,vector<int>(req+1));
+        dp[n][0]=1;
+        for(int i=n-1;i>=0;i--){
+            for(int s=0;s<=req;s++){
+                int skip=dp[i+1][s];
+                int take=0;
+                if(nums[i]<=s){
+                    take=dp[i+1][s-nums[i]];
+                }
+                dp[i][s]=take+skip;
+            }
+        }
+        return dp[0][req];
     }
 };
