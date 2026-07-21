@@ -10,7 +10,7 @@ public:
             for(int l=0;l+gap<n;l++){
                 int r=l+gap;
                 if(s[l]==s[r]){
-                    if(r-l+1<=2){
+                    if(r-l<=2){
                         dp[l][r]=true;
                     }
                     else{
